@@ -10,6 +10,8 @@ TagManager:
   - Gerador
   - Arma
   - PlataformaQuebravel
+  - GeradorChefe
+  - Chefe
   layers:
   - Default
   - TransparentFX

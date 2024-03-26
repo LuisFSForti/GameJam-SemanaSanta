@@ -26,6 +26,9 @@ public class MovimentacaoInimigo : MonoBehaviour
 
         Quaternion foco = Quaternion.LookRotation(rota);
         Corpo.rotation = Quaternion.Slerp(Corpo.rotation, foco, 1);
+
+        if (transform.position.y < -20)
+            Destroy(this.gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)

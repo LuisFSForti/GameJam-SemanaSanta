@@ -15,14 +15,19 @@ public class Tiro : MonoBehaviour
         Movimento = Corpo.velocity;
     }
 
+    private void Update()
+    {
+        if (transform.position.y < -20)
+            Destroy(this.gameObject);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.tag == "Inimigo")
+        if (collision.collider.tag == "Inimigo" || collision.collider.tag == "Chefe")
         { 
             if (!collision.collider.GetComponent<MovimentacaoInimigo>().EstaMorto())
             {
                 float sobra = collision.collider.GetComponent<MovimentacaoInimigo>().CausarDano(Dano);
-                Debug.Log(sobra);
                 if (sobra > 0)
                     Dano = sobra;
                 else

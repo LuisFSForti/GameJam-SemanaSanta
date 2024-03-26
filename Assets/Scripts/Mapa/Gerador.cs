@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Gerador : MonoBehaviour
 {
-    [SerializeField] private GameObject PrefabPadrao, PrefabRapido, PrefabPequeno, PrefabGrande, PrefabInvocador;
+    [SerializeField] private GameObject PrefabPadrao, PrefabRapido, PrefabPequeno, PrefabGrande, PrefabInvocador, PrefabChefe;
 
     public void Invocar()
     {
@@ -64,5 +64,10 @@ public class Gerador : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public void InvocarChefe()
+    {
+        Instantiate(PrefabChefe, transform);
     }
 }
