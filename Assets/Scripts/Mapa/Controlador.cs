@@ -7,7 +7,9 @@ public class Controlador : MonoBehaviour
 {
     [SerializeField] GameObject[] Armas;
     [SerializeField] Material MaterialParedes;
+    [SerializeField] float IntervaloMinimoInvocacao;
     private int Indice, Abates;
+    private float ProximaRodadaDeInvocacao;
     private bool ChefeNasceu, ChefeMorreu;
 
     private void Start()
@@ -16,19 +18,22 @@ public class Controlador : MonoBehaviour
         TrocarArma();
         ChefeNasceu = false;
         ChefeMorreu = false;
+        ProximaRodadaDeInvocacao = Time.timeSinceLevelLoad;
     }
 
     void Update()
     {
         int minutos = TempoEfetivo();
+
         if (!ChefeNasceu)
         {
-            if (GameObject.FindGameObjectsWithTag("Inimigo").Length < 5 * minutos)
+            if (GameObject.FindGameObjectsWithTag("Inimigo").Length < 5 * minutos && Time.timeSinceLevelLoad >= ProximaRodadaDeInvocacao)
             {
                 foreach (GameObject gerador in GameObject.FindGameObjectsWithTag("Gerador"))
                 {
-                    gerador.GetComponent<Gerador>().Invocar();
+                    StartCoroutine(gerador.GetComponent<Gerador>().Invocar(minutos));
                 }
+                ProximaRodadaDeInvocacao = Time.timeSinceLevelLoad + IntervaloMinimoInvocacao;
             }
             MaterialParedes.color = Color.white * (6 - minutos) / 8 + Color.red * minutos / 8;
         }
@@ -37,12 +42,13 @@ public class Controlador : MonoBehaviour
             if (GameObject.FindGameObjectsWithTag("Chefe").Length <= 0)
                 ChefeMorreu = true;
         }
-        if(minutos == 8 && !ChefeNasceu)
+
+        if (minutos >= 8 && !ChefeNasceu)
         {
             ChefeNasceu = true;
             GameObject.FindGameObjectWithTag("GeradorChefe").GetComponent<Gerador>().InvocarChefe();
         }
-        if(ChefeMorreu)
+        if (ChefeMorreu)
         {
             if (GameObject.FindGameObjectsWithTag("Inimigo").Length <= 0)
             {
@@ -56,7 +62,7 @@ public class Controlador : MonoBehaviour
         Abates++;
     }
 
-    public int TempoEfetivo()
+    int TempoEfetivo()
     {
         return (int)Mathf.Round(Time.timeSinceLevelLoad / 60) + 1 + Abates / 100;
     }
@@ -69,6 +75,7 @@ public class Controlador : MonoBehaviour
     private IEnumerator Sleep(float tempo)
     {
         yield return new WaitForSeconds(tempo);
+
         GameObject cabeca = GameObject.Find("Main Camera");
         Instantiate(Armas[Indice], cabeca.transform);
         Indice++;

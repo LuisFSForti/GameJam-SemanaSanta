@@ -12,6 +12,10 @@ TagManager:
   - PlataformaQuebravel
   - GeradorChefe
   - Chefe
+  - Critico
+  - ExtraCritico
+  - Corpo
+  - Nulo
   layers:
   - Default
   - TransparentFX

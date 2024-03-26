@@ -183,7 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Municao: 5
   Dano: 20
-  Velocidade: 300
+  Velocidade: 150
   Intervalo: 0.8
   UltimoTiro: 0
   Angulo: 0.5

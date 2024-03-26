@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MovimentacaoInimigo : MonoBehaviour
 {
-    [SerializeField] private float Velocidade, Dano, UltimoGolpe, VidaMaxima, VidaAtual;
+    [SerializeField] private float Velocidade, Dano, UltimoGolpe;
     [SerializeField] private Rigidbody Corpo;
 
     private GameObject Jogador;
@@ -14,7 +14,6 @@ public class MovimentacaoInimigo : MonoBehaviour
     {
         Jogador = GameObject.Find("Jogador");
         UltimoGolpe = Time.timeSinceLevelLoad;
-        VidaAtual = VidaMaxima;
     }
 
     void Update()
@@ -55,31 +54,5 @@ public class MovimentacaoInimigo : MonoBehaviour
                 UltimoGolpe = Time.timeSinceLevelLoad;
             }
         }
-    }
-
-    public float CausarDano(float valor)
-    {
-        float sobra = valor - VidaAtual;
-        VidaAtual -= valor;
-
-        if (VidaAtual > VidaMaxima)
-            VidaAtual = VidaMaxima;
-
-        if (VidaAtual <= 0)
-        {
-            GameObject.Find("Controlador").GetComponent<Controlador>().Abate();
-            Destroy(this.gameObject);
-            return sobra;
-        }
-
-        return 0;
-    }
-
-    public bool EstaMorto()
-    {
-        if (VidaAtual <= 0)
-            return true;
-
-        return false;
     }
 }

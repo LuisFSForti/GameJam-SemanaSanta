@@ -7,6 +7,7 @@ public class InvocadorController : MonoBehaviour
 {
     [SerializeField] private GameObject PrefabPadrao, PrefabRapido, PrefabPequeno, PrefabGrande;
     [SerializeField] private float UltimaInvocacao, Intervalo, Distancia;
+    [SerializeField] private GameObject BracoAnimado;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,7 @@ public class InvocadorController : MonoBehaviour
     {
         if(Time.timeSinceLevelLoad >= UltimaInvocacao + Intervalo)
         {
+            BracoAnimado.GetComponent<Animator>().Play("BracoInvocacao");
             switch (Random.Range(0, 10))
             {
                 default:

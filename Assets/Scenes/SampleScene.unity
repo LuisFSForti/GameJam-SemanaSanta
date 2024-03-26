@@ -12048,6 +12048,7 @@ MonoBehaviour:
   - {fileID: 5659176496077623930, guid: fe6ebdd4210a3a2408e639a289913bd0, type: 3}
   - {fileID: 1647686960221286825, guid: 809b521db904d9345b947b58af024503, type: 3}
   MaterialParedes: {fileID: 2100000, guid: 10999010e63637f489ee62dc4af0c54f, type: 2}
+  IntervaloMinimoInvocacao: 10
 --- !u!1 &2136175659
 GameObject:
   m_ObjectHideFlags: 0

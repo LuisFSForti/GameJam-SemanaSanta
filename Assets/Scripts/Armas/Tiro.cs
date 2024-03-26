@@ -7,12 +7,14 @@ public class Tiro : MonoBehaviour
     [SerializeField] private Rigidbody Corpo;
     private float Dano;
     private Vector3 Movimento;
+    private bool AcertouInimigo;
 
     public void Criar(float dano, float velocidade)
     {
         this.Dano = dano;
         Corpo.velocity = velocidade * transform.forward;
         Movimento = Corpo.velocity;
+        AcertouInimigo = false;
     }
 
     private void Update()
@@ -23,16 +25,9 @@ public class Tiro : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.tag == "Inimigo" || collision.collider.tag == "Chefe")
-        { 
-            if (!collision.collider.GetComponent<MovimentacaoInimigo>().EstaMorto())
-            {
-                float sobra = collision.collider.GetComponent<MovimentacaoInimigo>().CausarDano(Dano);
-                if (sobra > 0)
-                    Dano = sobra;
-                else
-                    Destroy(this.gameObject);
-            }   
+        if (AcertouInimigo)
+        {
+            AcertouInimigo = false;
         }
         else if (collision.collider.tag != "Tiro" && collision.collider.tag != "Player")
         {
@@ -40,5 +35,19 @@ public class Tiro : MonoBehaviour
         }
         
         Corpo.velocity = Movimento;
+    }
+
+    public float CausarDano(float vida, float multiplicador)
+    {
+        float aux = vida;
+        vida -= Dano * multiplicador;
+        Dano -= aux;
+
+        if (Dano <= 0)
+            Destroy(this.gameObject);
+        else
+            AcertouInimigo = true;
+
+        return vida;
     }
 }

@@ -6,18 +6,17 @@ public class Gerador : MonoBehaviour
 {
     [SerializeField] private GameObject PrefabPadrao, PrefabRapido, PrefabPequeno, PrefabGrande, PrefabInvocador, PrefabChefe;
 
-    public void Invocar()
+    public IEnumerator Invocar(int minutos)
     {
-        int minutos = GameObject.Find("Controlador").GetComponent<Controlador>().TempoEfetivo();
         if (minutos < 4)
-            if (Random.Range(0, 100) < 25 * minutos)
+            if (Random.Range(0, 100) > 25 * minutos)
             {
-                return;
+                yield break;
             }
 
-        for (int i = 0; i < minutos*10; i++)
+        for (int i = 0; i < minutos*6; i++)
         {
-            switch (Random.Range(minutos, 5 * minutos))
+            switch (Random.Range(minutos, 4 * minutos))
             {
                 case 0:
                 case 1:
@@ -63,6 +62,7 @@ public class Gerador : MonoBehaviour
                     i += 7;
                     break;
             }
+            yield return new WaitForSeconds(1);
         }
     }
 
