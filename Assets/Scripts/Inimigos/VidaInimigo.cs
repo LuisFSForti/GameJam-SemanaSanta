@@ -6,7 +6,7 @@ using UnityEngine;
 public class VidaInimigo : MonoBehaviour
 {
     [SerializeField] private float VidaMaxima;
-    private float VidaAtual;
+    [SerializeField] private float VidaAtual;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +36,6 @@ public class VidaInimigo : MonoBehaviour
                         multiplicador = 0;
                         break;
                 }
-                Debug.Log(multiplicador);
 
                 VidaAtual = collision.collider.GetComponent<Tiro>().CausarDano(VidaAtual, multiplicador);
 

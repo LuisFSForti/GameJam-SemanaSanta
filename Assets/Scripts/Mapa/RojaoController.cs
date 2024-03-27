@@ -6,10 +6,13 @@ public class RojaoController : MonoBehaviour
 {
     [SerializeField] private int Quantidade;
     [SerializeField] private GameObject ExplosaoPrefab;
+    private AudioSource ControleSom;
 
     // Start is called before the first frame update
     void Start()
     {
+        ControleSom = GetComponent<AudioSource>();
+
         Quaternion angulo = new Quaternion();
         for (int i = 0; i < Quantidade; i++)
         {
@@ -19,11 +22,14 @@ public class RojaoController : MonoBehaviour
                 Instantiate(ExplosaoPrefab, transform.position, angulo);
             }
         }
+        StartCoroutine(SomTiro());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator SomTiro()
     {
+        ControleSom.PlayOneShot(ControleSom.clip);
+        yield return new WaitForSeconds(ControleSom.clip.length);
+
         Destroy(this.gameObject);
     }
 }
